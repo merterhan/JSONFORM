@@ -1,0 +1,65 @@
+﻿@{
+	ViewData["Title"] = "Home Page";
+}
+@*<script src="~/lib/jquery/dist/jquery.min.js"></script>*@
+
+
+<div class="text-center">
+	<h1 class="display-4">Welcome</h1>
+	<p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+</div>
+
+<form></form>
+
+<script>
+	$(document).ready(function () {
+		$('form').jsonForm({
+			schema: {
+				id: {
+					type: 'integer',
+					title: 'Id',
+					required: true,
+				},
+				name: {
+					type: 'string',
+					title: 'Adı',
+					required: true,
+				},
+				isActive: {
+					type: 'boolean',
+					title: 'Aktif',
+					required: true,
+				},
+				gender: {
+					"type": "string",
+					"title": "Cinsiyet",
+					"enum": ["Erkek", "Kadın"]
+				},
+				age: {
+					type: 'number',
+					title: 'Yaşı'
+				}
+			},
+			form: [
+				"*",
+				{
+					"type": "submit",
+					"title": "OK Go - This Too Shall Pass"
+				}
+			],
+			onSubmit: function (errors, values) {
+
+				if (errors) {
+					coneols.log(errors);
+				} else {
+					var formData = $("form").serialize();
+					$.post("/Home/Submit", formData, function (result) {
+						console.log(result + " returned from backend");
+					}, "application/json");
+				}
+			}
+		});
+	});
+
+
+</script>
